@@ -1,0 +1,100 @@
+#page-component .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+#page-component .trigger:hover {
+  color: #1890ff;
+}
+
+#page-component .logo {
+  height: 32px;
+  background: rgba(255,255,255,.2);
+  margin: 16px;
+}
+
+
+.layoutbig{
+	flex-direction: row !important;
+	height:94vh;
+}
+
+
+.ant-card-cover{
+	height:250px;
+	overflow:hidden;
+}
+
+
+.ant-card-bordered{
+border:none;
+}
+
+
+.img-responsive{
+	max-width:100%;
+}
+
+.zombieArea{
+	background-image:url("/static/images/zombies/tester-bg@2x.png");
+	background-size: contain;
+	background-repeat:no-repeat;
+	position:relative;
+	height:100vh;
+
+}
+
+.zombie-eye{
+	bottom:20px;
+width:20vh;
+vertical-align: center;
+top:24vh;
+left:18vh;
+position:absolute;
+z-index:9999;
+z-index:13;
+
+}
+
+
+.zombie-head{
+width:40vh;
+vertical-align: center;
+left:4vh;
+top:10vh;
+z-index:12;
+position:absolute;
+}
+
+.zombie-shirt{
+width:40vh;
+vertical-align: center;
+top:30vh;
+position:absolute;
+}
+
+
+
+
+#components-form-demo-validate-other .dropbox {
+  height: 180px;
+  line-height: 1.5;
+}
+
+
+
+.headermenu {
+  float: right;
+  height: 100%;
+}
+.headermenu .ant-menu-item{
+  cursor: pointer;
+    padding: 0 12px;
+    display: inline-block;
+    transition: all .3s;
+    height: 100%;
+}
+
