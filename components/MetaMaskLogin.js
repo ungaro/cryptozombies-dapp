@@ -35,6 +35,7 @@ export default class MetaMaskLogin extends React.Component {
       console.log('NO WEB3 PLEASE INSTALL METAMASK');
       this.setWeb3Install(false);
     } else if (web3.version.network == 'loading') {
+console.log(web3.version);
       console.log('Wrong Network');
     } else {
       console.log('METAMASK INSTALLED');
