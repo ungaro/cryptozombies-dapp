@@ -128,7 +128,7 @@ setSignature(signature) {
 
 verify() {
 
-  axios.get('http://localhost:3020/auth/' + this.state.challenge[1].value + '/' + this.state.signature)
+  axios.get('http://139.162.188.66:3020/auth/' + this.state.challenge[1].value + '/' + this.state.signature)
   .then((response) =>{
 
     if (response.data.success === true) {
@@ -201,7 +201,7 @@ getChallenge() {
     	console.log("Default address:"+web3.eth.accounts[0]);
     	
 
-      axios.get('http://localhost:3020/auth/'+web3.eth.accounts[0])
+      axios.get('http://139.162.188.66:3020/auth/'+web3.eth.accounts[0])
       .then((response) => {
 
 
