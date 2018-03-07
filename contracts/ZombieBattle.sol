@@ -1,6 +1,6 @@
 pragma solidity ^0.4.19;
 
-import "./zombiehelper.sol";
+import "./ZombieHelper.sol";
 
 contract ZombieBattle is ZombieHelper {
   uint randNonce = 0;
