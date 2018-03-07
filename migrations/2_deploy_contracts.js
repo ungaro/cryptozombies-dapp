@@ -1,8 +1,8 @@
-var Ownable = artifacts.require('./ownable.sol')
-var ZombieBattle = artifacts.require('./zombiebattle.sol')
-var ZombieFactory = artifacts.require('./zombiefactory.sol')
-var ZombieFeeding = artifacts.require('./zombiefeeding.sol')
-var ZombieHelper = artifacts.require('./zombiehelper.sol')
+var Ownable = artifacts.require('./Ownable.sol')
+var ZombieBattle = artifacts.require('./ZombieBattle.sol')
+var ZombieFactory = artifacts.require('./ZombieFactory.sol')
+var ZombieFeeding = artifacts.require('./ZombieFeeding.sol')
+var ZombieHelper = artifacts.require('./ZombieHelper.sol')
 
 module.exports = deployer => deployer.deploy([
 							  Ownable,
