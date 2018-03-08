@@ -49,7 +49,7 @@ contract ZombieFactory is Ownable {
     }
 
 
-   function getZombie(uint index) public constant returns(uint, string, string, uint) {
+   function getZombie(uint index) public constant returns(string, uint, uint32,uint32,uint16, uint16) {
         return (zombies[index].name, zombies[index].dna, zombies[index].level, zombies[index].readyTime, zombies[index].winCount, zombies[index].lossCount);
     }
 
