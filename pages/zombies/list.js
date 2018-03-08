@@ -9,6 +9,7 @@ import { setWeb3Instance } from '../../services/blockChainService'
 
 const { Header, Sider, Content } = Layout;
 const { Meta } = Card;
+import ZombieFactoryJsonData from "../../build/contracts/ZombieFactory.json";
 
 
 
@@ -109,11 +110,64 @@ var abi = [
     {
       "constant": true,
       "inputs": [],
+      "name": "getZombieCount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
       "name": "owner",
       "outputs": [
         {
           "name": "",
           "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getZombie",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint32"
+        },
+        {
+          "name": "",
+          "type": "uint32"
+        },
+        {
+          "name": "",
+          "type": "uint16"
+        },
+        {
+          "name": "",
+          "type": "uint16"
         }
       ],
       "payable": false,
@@ -175,11 +229,74 @@ var abi = [
     }
   ];
 
+ 
+var contractAddress = "0x4c543bbb8386d423c72c4c51d0815d81c57fb7e2";
 
-var contractAddress = "0x2ac28f4285e2ec9cb30903a989ef1a4630035515";
-//var contract = web3.eth.contract(contractAddress, abi);
-var contract = web3.eth.contract(abi).at(contractAddress);
+//var abi = ZombieFactoryJsonData.abi;
+//var contractAddress = ZombieFactoryJsonData.networks["5777"].address;
 
+//var contract = web3.eth.contract(abi);
+
+var MyContract = web3.eth.contract(abi);
+
+// initiate contract for an address
+var myContractInstance = MyContract.at(contractAddress);
+console.log("INSTANCE:"+myContractInstance);
+
+console.log(abi);
+console.log(contractAddress);
+
+
+
+
+
+myContractInstance.createRandomZombie("ALP TEST 2", function(error, result){
+     if(!error)
+         console.log(result)
+     else
+         console.error(error);
+ });
+ 
+
+myContractInstance.getZombieCount( function(error, result){
+     if(!error)
+         console.log(result)
+     else
+         console.error(error);
+ });
+
+
+myContractInstance.getZombie("0", function(error, result){
+     if(!error)
+         console.log(result)
+     else
+         console.error(error);
+ });
+
+/*
+
+
+myContractInstance.createRandomZombie("ALP TEST", function(error, result){
+     if(!error)
+         console.log(result)
+     else
+         console.error(error);
+ });
+
+contract.createRandomZombie("ALP TEST", function(error, result){
+     if(!error)
+         console.log(result)
+     else
+         console.error(error);
+ });
+
+ contract.getZombieCount((_err,_resp) => {
+        if (_err != null) {
+            console.log(_err);
+        } else {
+console.log(_resp);
+        }
+    });
 
  contract.zombies(0,(_err,_resp) => {
         if (_err != null) {
@@ -198,7 +315,7 @@ console.log(_resp);
         }
     });
 
-
+ */
 /*
 contract.createRandomZombie("ALP TEST", function(error, result){
      if(!error)
@@ -254,7 +371,7 @@ Available Accounts
 (7) 0x5b4dd0bcb80119eb3b5b348a74f55aa201cf8bf9
 (8) 0xa17688a5c70e0a8bf4c15ae9383f9ceced155755
 (9) 0xeac6e1e45607c3573e53ab1dff3bf4fa20edde2b
-*/
+
 
 console.log("TRANSACTIONS");
 var filter = web3.eth.filter({fromBlock:0, toBlock:'latest', address: "0xb0088bcd17575366784c4632e8c6cfee3afb197a"});
@@ -269,13 +386,11 @@ filter.get(function (err, transactions) {
     console.log(txInfo.from);
     console.log(txInfo.input);
 
-    /* Here you have
-    txInfo.contractAddress;
-    txInfo.from;
-    txInfo.input;
-    */
+
   });
 });
+
+*/
 
 //console.log(result) // '0x25434534534'
 
