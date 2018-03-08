@@ -20,7 +20,7 @@ let setWeb3Instance = function () {
                     web3Instance = web3
                 } else {
                     // Fallback to localhost if no web3 injection.
-                    var provider = new Web3.providers.HttpProvider('http://127.0.0.1:7545')
+                    var provider = new Web3.providers.HttpProvider('http://139.162.188.66:7545')
                     web3 = new Web3(provider)
                     web3Instance = web3
                 }
