@@ -19,6 +19,8 @@ export default class ListZombie extends Component {
   constructor (props) {
     super(props)
     console.log("LIST ZOMBIES");
+       // this.zombiecount = this.zombiecount.bind(this);
+
 
     //this.store = initStore(props.isServer, props.shows)
   }
@@ -33,245 +35,57 @@ export default class ListZombie extends Component {
 listZombies(){
     console.log("LIST ZOMBIES FUNCTION");
 
-
-var abi = [
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "zombies",
-      "outputs": [
-        {
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "name": "dna",
-          "type": "uint256"
-        },
-        {
-          "name": "level",
-          "type": "uint32"
-        },
-        {
-          "name": "readyTime",
-          "type": "uint32"
-        },
-        {
-          "name": "winCount",
-          "type": "uint16"
-        },
-        {
-          "name": "lossCount",
-          "type": "uint16"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "zombieToOwner",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_name",
-          "type": "string"
-        }
-      ],
-      "name": "createRandomZombie",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "getZombieCount",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "index",
-          "type": "uint256"
-        }
-      ],
-      "name": "getZombie",
-      "outputs": [
-        {
-          "name": "",
-          "type": "string"
-        },
-        {
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "name": "",
-          "type": "uint32"
-        },
-        {
-          "name": "",
-          "type": "uint32"
-        },
-        {
-          "name": "",
-          "type": "uint16"
-        },
-        {
-          "name": "",
-          "type": "uint16"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "transferOwnership",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "zombieId",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "name": "dna",
-          "type": "uint256"
-        }
-      ],
-      "name": "NewZombie",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "previousOwner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "name": "newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "OwnershipTransferred",
-      "type": "event"
-    }
-  ];
-
- 
-var contractAddress = "0x4c543bbb8386d423c72c4c51d0815d81c57fb7e2";
-
-//var abi = ZombieFactoryJsonData.abi;
-//var contractAddress = ZombieFactoryJsonData.networks["5777"].address;
+var abi = ZombieFactoryJsonData.abi;
+var contractAddress = ZombieFactoryJsonData.networks["5777"].address;
 
 //var contract = web3.eth.contract(abi);
 
 var MyContract = web3.eth.contract(abi);
-
+var zombiecount = 0;
+var zombies=[];
 // initiate contract for an address
 var myContractInstance = MyContract.at(contractAddress);
 console.log("INSTANCE:"+myContractInstance);
 
-console.log(abi);
-console.log(contractAddress);
+//console.log(abi);
+//console.log(contractAddress);
 
 
-
-
-
-myContractInstance.createRandomZombie("ALP TEST 2", function(error, result){
+myContractInstance.createRandomZombie("ALP TEST 4", function(error, result){
      if(!error)
          console.log(result)
      else
          console.error(error);
  });
- 
+
+
 
 myContractInstance.getZombieCount( function(error, result){
-     if(!error)
-         console.log(result)
-     else
-         console.error(error);
+     if(!error){
+        zombiecount=result;
+        console.log("ZOMBIE COUNT: "+result);
+
+
+
+for (var i=0; i < zombiecount; i++) {
+    myContractInstance.getZombie("0", function(error, result){
+      if(!error)
+        zombies.push(result)
+      else
+        console.error(error);
  });
 
 
-myContractInstance.getZombie("0", function(error, result){
-     if(!error)
-         console.log(result)
-     else
+    } 
+
+
+
+
+     }else{
          console.error(error);
+      }
  });
+
 
 /*
 
@@ -422,6 +236,19 @@ console.log("Challenge accepted");
     <h1>Zombie List</h1>
     <hr/>
  <Row>
+
+
+
+
+
+
+{[...Array(this.zombiecount)].map((x, i) =>
+
+<div>
+ZOMBIES-
+</div>
+
+)}
 
   {[...Array(10)].map((x, i) =>
 
