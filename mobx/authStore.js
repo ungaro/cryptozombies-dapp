@@ -3,6 +3,10 @@ import agent from '../agent';
 import userStore from './userStore';
 import commonStore from './commonStore';
 
+
+// TODO -- Profile  integration with blockchain
+
+
 class AuthStore {
   @observable inProgress = false;
   @observable errors = undefined;

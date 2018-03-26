@@ -1,6 +1,10 @@
 import { observable, action } from 'mobx';
 import agent from '../agent';
 
+
+// TODO -- Profile  integration with blockchain
+
+
 class ProfileStore {
 
   @observable profile = undefined;
