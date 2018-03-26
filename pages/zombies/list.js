@@ -9,6 +9,7 @@ import { setWeb3Instance } from '../../services/blockChainService'
 
 const { Header, Sider, Content } = Layout;
 const { Meta } = Card;
+
 import ZombieFactoryJsonData from "../../build/contracts/ZombieFactory.json";
 
 
@@ -19,67 +20,91 @@ export default class ListZombie extends Component {
   constructor (props) {
     super(props)
     console.log("LIST ZOMBIES");
-       // this.zombiecount = this.zombiecount.bind(this);
 
 
-    //this.store = initStore(props.isServer, props.shows)
+    this.state = {
+      zombiecount: 0,
+      zombies :[]
+    };
+
+
+
+
+    this.setZombieCount = this.setZombieCount.bind(this);
+    this.setZombies = this.setZombies.bind(this);
+
+ 
   }
 
-
-  componentDidMount(prevProps, prevState, prevContext) {
+  componentDidMount() {
     setWeb3Instance();
     this.listZombies();
-
   }
 
+
+setZombieCount(zombiecount) {
+  this.setState({
+    zombiecount: zombiecount
+  });
+  this.forceUpdate();
+}
+
+
+
+setZombies(zombies) {
+  this.setState({
+    zombies: zombies
+  });
+}
+
+
+
+
+
+
 listZombies(){
-    console.log("LIST ZOMBIES FUNCTION");
 
 var abi = ZombieFactoryJsonData.abi;
 var contractAddress = ZombieFactoryJsonData.networks["5777"].address;
-
-//var contract = web3.eth.contract(abi);
-
 var MyContract = web3.eth.contract(abi);
+
 var zombiecount = 0;
 var zombies=[];
-// initiate contract for an address
 var myContractInstance = MyContract.at(contractAddress);
-console.log("INSTANCE:"+myContractInstance);
-
-//console.log(abi);
-//console.log(contractAddress);
 
 
-myContractInstance.createRandomZombie("ALP TEST 4", function(error, result){
+/*
+myContractInstance.createRandomZombie("ZOMBIE 2", function(error, result){
      if(!error)
          console.log(result)
      else
          console.error(error);
  });
+*/
 
-
-
-myContractInstance.getZombieCount( function(error, result){
+myContractInstance.getZombieCount( (error, result) =>{
      if(!error){
-        zombiecount=result;
-        console.log("ZOMBIE COUNT: "+result);
-
-
-
-for (var i=0; i < zombiecount; i++) {
-    myContractInstance.getZombie("0", function(error, result){
-      if(!error)
-        zombies.push(result)
-      else
+        this.zombiecount=parseInt(result);
+        this.setZombieCount(parseInt(this.zombiecount));
+        console.log(this.zombiecount);
+for (var i=0; i < this.state.zombiecount; i++) {
+    myContractInstance.getZombie(i, (error, result)=>{
+      if(!error){      
+        var zombie={};
+        zombie=[result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber(),result[4].toNumber(),result[5].toNumber()];
+        zombies.push(zombie);
+        this.setZombies(zombies);
+      }
+      else{
         console.error(error);
+      }
  });
-
 
     } 
 
 
-
+        console.log("ZOMBIE COUNT: "+parseInt(this.state.zombiecount));
+        console.log("ZOMBIES: "+this.state.zombies);
 
      }else{
          console.error(error);
@@ -87,172 +112,33 @@ for (var i=0; i < zombiecount; i++) {
  });
 
 
-/*
-
-
-myContractInstance.createRandomZombie("ALP TEST", function(error, result){
-     if(!error)
-         console.log(result)
-     else
-         console.error(error);
- });
-
-contract.createRandomZombie("ALP TEST", function(error, result){
-     if(!error)
-         console.log(result)
-     else
-         console.error(error);
- });
-
- contract.getZombieCount((_err,_resp) => {
-        if (_err != null) {
-            console.log(_err);
-        } else {
-console.log(_resp);
-        }
-    });
-
- contract.zombies(0,(_err,_resp) => {
-        if (_err != null) {
-            console.log(_err);
-        } else {
-console.log(_resp);
-        }
-    });
-
-
- contract.zombies.length((_err,_resp) => {
-        if (_err != null) {
-            console.log(_err);
-        } else {
-console.log(_resp);
-        }
-    });
-
- */
-/*
-contract.createRandomZombie("ALP TEST", function(error, result){
-     if(!error)
-         console.log(result)
-     else
-         console.error(error);
- });
- */
-
-//contract.createRandomZombie();
-/*
-var randomzombie = contract.createRandomZombie("ALP TEST").call().then(function(v) {
-var strName= v.toString();
-console.log("Name: "+ strName);   
-});
-*/
 
 
 
 
-
-
-
-
-
-
-/*
-var MyContract = web3.eth.contract(abi);
-
-// initiate contract for an address
-var myContractInstance = MyContract.at('0xb0088bcd17575366784c4632e8c6cfee3afb197a');
-console.log("INSTANCE:"+myContractInstance);
-
-
-var result = myContractInstance._createZombie("TEST","1234567890123456",function(error, result){
-    if(!error)
-        console.log(JSON.stringify(result));
-    else
-        console.error(error);
-});
-
-
-
-Available Accounts
-==================
-(0) 0x054357c3f98d111c725820389ba23bac8cceca1d
-(1) 0x8c419f6abcb52daf327b3af578e298e994188cf7
-(2) 0xc76b1fd78b801bb641cc3482637fb1aeb5347a69
-(3) 0x1142ee740a7c7305c7110cc7ddc3ad3e1c772e44
-(4) 0x70ee7439155028e71223570c6c9643c665ff7480
-(5) 0xc9288c29996d91dcdc9835c7f3d0e44c43858b2f
-(6) 0x346b40ce22ee438159b104c89cc8e8721deee188
-(7) 0x5b4dd0bcb80119eb3b5b348a74f55aa201cf8bf9
-(8) 0xa17688a5c70e0a8bf4c15ae9383f9ceced155755
-(9) 0xeac6e1e45607c3573e53ab1dff3bf4fa20edde2b
-
-
-console.log("TRANSACTIONS");
-var filter = web3.eth.filter({fromBlock:0, toBlock:'latest', address: "0xb0088bcd17575366784c4632e8c6cfee3afb197a"});
-filter.get(function (err, transactions) {
-  console.log("FILTER");
-  console.log(transactions);
-  transactions.forEach(function (tx) {
-    var txInfo = web3.eth.getTransactionReceipt(tx.transactionHash);
-    console.log("TXINFO");
-    console.log(txInfo);
-    console.log(txInfo.contractAddress);
-    console.log(txInfo.from);
-    console.log(txInfo.input);
-
-
-  });
-});
-
-*/
-
-//console.log(result) // '0x25434534534'
-
-/*
-// call constant function (synchronous way)
-var owner = myContractInstance.owner.call(function(error, result){
-    if(!error)
-        console.log(JSON.stringify(result));
-    else
-        console.error(error);
-});
-*/
-
-
-
-//console.log("owner="+owner);
 
 }
-    getChallenge() {
-
-console.log("Challenge accepted");
-}
-
-  render() {
-    return (
-    
-    <div>
-
-    <h1>Zombie List</h1>
-    <hr/>
- <Row>
 
 
 
 
 
+render() {
 
-{[...Array(this.zombiecount)].map((x, i) =>
 
-<div>
-ZOMBIES-
-</div>
+                 return (
+<Row>         
 
-)}
+<h2>There are total <strong>{this.state.zombiecount}</strong> Zombies in our blockchain.</h2><br/><hr/><br/>
 
-  {[...Array(10)].map((x, i) =>
+{this.state.zombies && this.state.zombies.map((zombie,index) => {
 
-      <Col span={8} key={i}>
+
+
+return (
+  
+
+   <Col span={8} key={index}>
 
  <Card
     style={{ width: 300 }}
@@ -261,15 +147,44 @@ ZOMBIES-
     actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}>
     <Meta
       avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-      title="Card title"
+      title={zombie[0]}
       description="This is the description"/>
+      DNA: {zombie[1]}<br/>
+      Level: {zombie[2]}<br/>
+      ReadyTime: {zombie[3]}<br/>
+      WinCount: {zombie[4]}<br/>
+      LossCount: {zombie[5]}
+
   </Card>
 </Col>
-  )}
-   </Row>
-    </div>
-    )
+
+
+
+  )
+
+
+})}
+
+
+</Row>
+
+     );
   }
 }
+
+/*
+
+
+
+<Col key="index"> 
+  {zombie[0]}
+  {zombie[1]}
+  {zombie[2]}
+  {zombie[3]}
+  {zombie[4]}
+  {zombie[5]}
+</Col>
+*/
+
 
 
