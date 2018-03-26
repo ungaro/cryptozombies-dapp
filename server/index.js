@@ -13,7 +13,7 @@ const app = next({ dev })
 //const metaAuth = new MetaAuth()
 
 const handle = app.getRequestHandler()
-const api = require('./api')
+//const api = require('./api')
 
 
 
@@ -91,16 +91,6 @@ console.log(req.metaAuth.recovered);
 
 
 
-
-    server.get('/api/shows/new', (req, res) => api.get('tv-list-1').then(json => res.send(json)))
-
-    server.get('/api/shows/popular', (req, res) => api.get('tv-list-2').then(json => res.send(json)))
-
-    server.get('/api/shows/fresh', (req, res) => api.get('tv-list-3').then(json => res.send(json)))
-        
-    //server.get('/', (req, res) => res.redirect('/'))
-
-    server.get('/tv', (req, res) => res.redirect('/tv/fresh'))
 
     server.get('*', (req, res) => handle(req, res))
 
