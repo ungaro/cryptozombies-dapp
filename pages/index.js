@@ -30,7 +30,7 @@ export default class ListZombie extends Component {
     
     <div>
 
-    <h1>Welcome to Cryptozomvbies Dapp</h1>
+    <h1>Welcome to Crypto Zombies Dapp</h1>
     <hr/>
   <MetaMaskLogin />
     </div>
