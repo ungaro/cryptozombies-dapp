@@ -16,9 +16,12 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
+import Router from 'next/router'
 
 
+import { setWeb3Instance } from '../../services/blockChainService'
 
+import ZombieFactoryJsonData from "../../build/contracts/ZombieFactory.json";
 
 @inject('store') @observer
 class ZombieForm extends Component {
@@ -30,6 +33,31 @@ class ZombieForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        console.log(values.nickname);
+
+var abi = ZombieFactoryJsonData.abi;
+var contractAddress = ZombieFactoryJsonData.networks["5777"].address;
+var MyContract = web3.eth.contract(abi);
+
+var zombiecount = 0;
+var zombies=[];
+var myContractInstance = MyContract.at(contractAddress);
+
+myContractInstance.createRandomZombie(values.nickname, function(error, result){
+     if(!error){
+         console.log(result)
+      Router.push({
+          pathname: '/zombies/list'
+      })
+     }else{
+         console.error(error);
+        }
+ });
+
+
+   
+
+
       }
     });
   };
@@ -192,6 +220,12 @@ export default class CreateZombie extends Component {
     super(props)
     this.store = initStore(props.isServer)    
   }
+
+  componentDidMount() {
+    setWeb3Instance();
+  }
+
+
 
 
     getChallenge() {
